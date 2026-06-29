@@ -1,5 +1,5 @@
 const $=id=>document.getElementById(id);
-const KEY='fahrtenbuch_v6_3';
+const KEY='fahrtenbuch_v6_4';
 let state=load();
 let pendingKind='visit';
 let pendingPhoto='';
