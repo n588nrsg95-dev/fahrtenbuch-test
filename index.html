@@ -6,14 +6,14 @@
   <title>Fahrtenbuch</title>
   <meta name="theme-color" content="#4f46e5">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="styles.css?v=6.2">
+  <link rel="stylesheet" href="styles.css?v=6.3">
 </head>
 <body>
 <div class="app">
   <header class="topbar">
     <div>
       <h1>Fahrtenbuch</h1>
-      <p>Version 6.2</p>
+      <p>Version 6.3</p>
     </div>
     <button id="settingsBtn" class="icon" type="button">⚙️</button>
   </header>
@@ -81,7 +81,17 @@
       <button id="clearTripsBtn" class="setrow danger" type="button"><div><b>Fahrtenbuchdaten löschen</b><small>Nur Fahrten und Kilometerstände löschen</small></div><span>🗑️</span></button>
       <button id="clearContactsBtn" class="setrow danger" type="button"><div><b>Adressdaten löschen</b><small>Nur gespeicherte Anschriften löschen</small></div><span>🗑️</span></button>
       <button id="clearDriversBtn" class="setrow danger" type="button"><div><b>Fahrerdaten löschen</b><small>Nur gespeicherte Fahrer löschen</small></div><span>🗑️</span></button>
-      <div class="version">Version 6.2</div>
+      <div class="version">Version 6.3</div>
+    </section>
+  </main>
+
+
+  <main id="monthSelect" class="view">
+    <div class="sub"><button id="monthBack" type="button">‹</button><h2>Monat auswählen</h2><span></span></div>
+    <section class="panel">
+      <p class="hint">Bitte wähle den Monat für die Abrechnung aus.</p>
+      <div id="monthList" class="monthList"></div>
+      <button id="monthExport" class="primary" type="button">Exportieren</button>
     </section>
   </main>
 
@@ -103,6 +113,6 @@
     </section>
   </main>
 </div>
-<script src="app.js?v=6.2"></script>
+<script src="app.js?v=6.3"></script>
 </body>
 </html>
