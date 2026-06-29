@@ -1,36 +1,108 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Fahrtenbuch</title><meta name="theme-color" content="#4f46e5"><link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="styles.css?v=5.23"></head><body>
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Fahrtenbuch</title>
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css?v=6.0">
+</head>
+<body>
 <div class="app">
-<header class="topbar"><div><h1>Fahrtenbuch</h1><p>Kilometerstand erfassen</p></div><button id="settingsBtn" class="icon" type="button">⚙️</button></header>
-<main id="home" class="view active">
- <button class="action first" data-kind="first"><span>🚩</span><div><b>ERSTER PATIENT</b><small>Adresse und Kilometerstand eingeben</small></div></button>
- <button class="action visit" data-kind="visit"><span>📷</span><div><b>ANKUNFT</b><small>Adresse und Kilometerstand eingeben</small></div></button>
- <button class="action last" data-kind="last"><span>🏁</span><div><b>LETZTER PATIENT</b><small>Adresse und Kilometerstand eingeben</small></div></button>
- <button id="entriesBtn" class="row"><span>☷</span><div><b>Einträge anzeigen</b><small>Chronologisch nach Tagen</small></div><em>›</em></button>
- <button id="uploadBtn" class="row"><span>🖼️</span><div><b>Foto hochladen</b><small>Aus Galerie auswählen</small></div><em>›</em></button>
- <section class="summary"><span id="todayText">Heute</span><b id="todayCount">0 Einträge</b></section>
-</main>
-<main id="addresses" class="view"><div class="sub"><button class="back">‹</button><h2>Anschrift auswählen</h2><span></span></div><section class="panel">
- <label>Bekannte Anschriften</label><select id="addressSelect"><option value="">Bitte auswählen</option></select><button id="useAddress" class="primary">Anschrift übernehmen</button>
- <div class="divider">oder</div><label>Neue Anschrift anlegen</label><textarea id="newAddress" rows="3" placeholder="Straße Hausnummer, PLZ Ort"></textarea><button id="addAddress" class="secondary">+ Anschrift speichern</button>
- <div id="addressList" class="chips"></div></section></main>
-<main id="capture" class="view"><div class="sub"><button class="back">‹</button><h2>Patient erfassen</h2><span></span></div><section class="panel">
- <label>Anschrift</label><select id="captureAddressSelect"><option value="">Bekannte Anschrift auswählen</option></select>
- <label>Neue Anschrift / Korrektur</label><textarea id="captureNewAddress" rows="3" placeholder="Straße Hausnummer, PLZ Ort"></textarea>
- <label>Kilometerstand</label><input id="kmInput" inputmode="numeric" placeholder="z. B. 124537">
- <div class="two"><button id="takePhoto" class="primary">📷 Foto machen</button><button id="pickPhoto" class="secondary">🖼️ Hochladen</button></div>
- <div id="preview" class="preview"><span>Noch kein Foto</span></div><p id="ocrStatus" class="status">Bereit</p><button id="saveEntry" class="primary">Übernehmen & speichern</button></section></main>
-<main id="entries" class="view"><div class="sub"><button class="back">‹</button><h2>Einträge</h2><span></span></div><div id="entryList" class="list"></div></main>
-<main id="settings" class="view"><div class="sub"><button class="back">‹</button><h2>Einstellungen</h2><span></span></div><section class="settings">
- <label>Fahrername</label><input id="driverInput" placeholder="Name der Fahrerin / des Fahrers"><label>Kilometervergütung</label><div class="rate"><input id="rateInput" inputmode="decimal" value="0,30"><span>€/km</span></div><label>Aktives Fahrzeug</label><select id="vehicleSelect"><option value="">Standardfahrzeug</option></select>
- <button id="excelBtn" class="setrow"><div><b>Excel-Monatsabrechnung herunterladen</b><small>Echte Excel-Datei .xlsx</small></div><span>⬇️</span></button>
- <button id="pdfBtn" class="setrow"><div><b>PDF-Monatsabrechnung öffnen</b><small>Druckansicht als PDF speichern</small></div><span>📄</span></button>
- <button id="calBtn" class="setrow"><div><b>Kalibrierung</b><small>Kilometerbereich pro Fahrzeug festlegen</small></div><span>🎯</span></button>
- <button id="backupBtn" class="setrow"><div><b>Datensicherung exportieren</b><small>Backup als JSON</small></div><span>☁️</span></button>
- <button id="clearTripsBtn" class="setrow danger"><div><b>Fahrtenbuchdaten löschen</b><small>Nur Fahrten und Kilometerstände löschen</small></div><span>🗑️</span></button>
- <button id="clearContactsBtn" class="setrow danger"><div><b>Kontaktdaten löschen</b><small>Nur gespeicherte Anschriften löschen</small></div><span>🗑️</span></button>
- <button id="clearVehiclesBtn" class="setrow danger"><div><b>Fahrzeugdaten löschen</b><small>Nur Fahrzeuge und Kalibrierungen löschen</small></div><span>🗑️</span></button>
- <div class="version">Version 5.23</div></section></main>
-<main id="pdfView" class="view"><div class="sub no-print"><button id="pdfBack" class="back" type="button">‹</button><h2>PDF-Monatsabrechnung</h2><button id="pdfPrint" class="secondary smallbtn" type="button">PDF speichern</button></div><section id="pdfContent" class="pdf-page"></section></main>
-<main id="calibration" class="view"><div class="sub"><button class="backSettings">‹</button><h2>Kalibrierung</h2><span></span></div><section class="panel"><label>Fahrzeug</label><input id="vehicle" placeholder="z. B. VW Golf"><div class="two"><button id="calTake" class="primary">📷 Foto</button><button id="calPick" class="secondary">🖼️ Hochladen</button></div><div id="calPreview" class="preview cal fullcal"><span>Foto vom Kombiinstrument</span></div><small>Rahmen exakt um den Kilometerstand legen. Rahmen verschieben, unten rechts am Punkt vergrößern/verkleinern. Möglichst nur die Ziffern markieren, nicht Uhrzeit oder Temperatur.</small><label>Kilometerstand auf dem Foto</label><input id="calKm" inputmode="numeric" placeholder="z. B. 124537"><button id="saveCal" class="primary">Kalibrierung speichern</button></section></main>
-<input id="cameraInput" type="file" accept="image/*" capture="environment" hidden><input id="galleryInput" type="file" accept="image/*" hidden><input id="calCameraInput" type="file" accept="image/*" capture="environment" hidden><input id="calGalleryInput" type="file" accept="image/*" hidden>
-</div><script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script><script src="app.js?v=5.23"></script></body></html>
+  <header class="topbar">
+    <div>
+      <h1>Fahrtenbuch</h1>
+      <p>Version 6.0</p>
+    </div>
+    <button id="settingsBtn" class="icon" type="button">⚙️</button>
+  </header>
+
+  <main id="home" class="view active">
+    <button id="driverCard" class="card select" type="button">
+      <span>👤</span><div><small>Aktueller Fahrer</small><b id="currentDriver">Bitte auswählen</b></div><em>›</em>
+    </button>
+    <section class="actions">
+      <button class="action first" data-kind="first" type="button"><span>🚩</span><div><b>ERSTER PATIENT</b><small>Tagesbeginn erfassen</small></div></button>
+      <button class="action visit" data-kind="visit" type="button"><span>📍</span><div><b>ANKUNFT</b><small>Patientenbesuch erfassen</small></div></button>
+      <button class="action last" data-kind="last" type="button"><span>🏁</span><div><b>LETZTER PATIENT</b><small>Tagesende erfassen</small></div></button>
+    </section>
+    <button id="entriesBtn" class="row" type="button"><span>☷</span><div><b>Einträge anzeigen</b><small>Chronologisch nach Tagen</small></div><em>›</em></button>
+    <section class="summary"><span id="todayText">Heute</span><b id="todayCount">0 Einträge</b></section>
+  </main>
+
+  <main id="drivers" class="view">
+    <div class="sub"><button class="back" type="button">‹</button><h2>Fahrer auswählen</h2><span></span></div>
+    <section class="panel">
+      <label>Bekannte Fahrer</label>
+      <select id="driverSelect"><option value="">Bitte auswählen</option></select>
+      <button id="useDriver" class="primary" type="button">Fahrer übernehmen</button>
+      <div class="divider">oder</div>
+      <label>Neuen Fahrer anlegen</label>
+      <input id="newDriver" placeholder="Name der Fahrerin / des Fahrers">
+      <button id="addDriver" class="secondary" type="button">+ Fahrer speichern</button>
+      <div id="driverList" class="chips"></div>
+    </section>
+  </main>
+
+  <main id="entryForm" class="view">
+    <div class="sub"><button class="back" type="button">‹</button><h2 id="formTitle">Eintrag erfassen</h2><span></span></div>
+    <section class="panel">
+      <label>Fahrer</label>
+      <div class="readonly" id="formDriver">-</div>
+      <label>Anschrift</label>
+      <select id="addressSelect"><option value="">Bitte auswählen</option></select>
+      <textarea id="addressText" rows="3" placeholder="Neue Anschrift oder Korrektur eingeben"></textarea>
+      <button id="saveAddressBtn" class="secondary" type="button">Anschrift merken</button>
+      <label>Kilometerstand</label>
+      <input id="kmInput" inputmode="numeric" pattern="[0-9]*" placeholder="z. B. 169748">
+      <button id="photoBtn" class="smallPhoto" type="button">📷 Foto aufnehmen / hochladen (optional)</button>
+      <input id="photoInput" type="file" accept="image/*" capture="environment" hidden>
+      <div id="photoPreview" class="photoPreview hidden"></div>
+      <button id="saveEntry" class="primary" type="button">Speichern</button>
+    </section>
+  </main>
+
+  <main id="entries" class="view">
+    <div class="sub"><button class="back" type="button">‹</button><h2>Einträge</h2><span></span></div>
+    <div id="entryList" class="list"></div>
+  </main>
+
+  <main id="settings" class="view">
+    <div class="sub"><button class="back" type="button">‹</button><h2>Einstellungen</h2><span></span></div>
+    <section class="settings">
+      <h3>Auswertung</h3>
+      <label>Kilometervergütung</label>
+      <div class="rate"><input id="rateInput" inputmode="decimal" value="0,30"><span>€/km</span></div>
+      <button id="excelBtn" class="setrow" type="button"><div><b>Excel-Monatsabrechnung</b><small>.xls-Datei herunterladen</small></div><span>⬇️</span></button>
+      <button id="pdfBtn" class="setrow" type="button"><div><b>PDF-Monatsabrechnung</b><small>In der App anzeigen / drucken</small></div><span>📄</span></button>
+      <h3>Daten</h3>
+      <button id="backupBtn" class="setrow" type="button"><div><b>Datensicherung exportieren</b><small>Backup als JSON</small></div><span>☁️</span></button>
+      <button id="clearTripsBtn" class="setrow danger" type="button"><div><b>Fahrtenbuchdaten löschen</b><small>Nur Fahrten und Kilometerstände löschen</small></div><span>🗑️</span></button>
+      <button id="clearContactsBtn" class="setrow danger" type="button"><div><b>Adressdaten löschen</b><small>Nur gespeicherte Anschriften löschen</small></div><span>🗑️</span></button>
+      <button id="clearDriversBtn" class="setrow danger" type="button"><div><b>Fahrerdaten löschen</b><small>Nur gespeicherte Fahrer löschen</small></div><span>🗑️</span></button>
+      <div class="version">Version 6.0</div>
+    </section>
+  </main>
+
+  <main id="pdfView" class="view">
+    <div class="sub"><button id="pdfBack" type="button">‹</button><h2>PDF-Vorschau</h2><span></span></div>
+    <section class="panel"><button id="printPdf" class="primary" type="button">PDF drucken / speichern</button></section>
+    <section id="pdfContent" class="pdfContent"></section>
+  </main>
+
+  <main id="editEntry" class="view">
+    <div class="sub"><button class="backEntries" type="button">‹</button><h2>Eintrag korrigieren</h2><span></span></div>
+    <section class="panel">
+      <label>Typ</label><select id="editKind"><option value="first">Erster Patient</option><option value="visit">Patient</option><option value="last">Letzter Patient</option></select>
+      <label>Fahrer</label><select id="editDriver"></select>
+      <label>Anschrift</label><textarea id="editAddress" rows="3"></textarea>
+      <label>Kilometerstand</label><input id="editKm" inputmode="numeric">
+      <button id="updateEntry" class="primary" type="button">Änderung speichern</button>
+      <button id="deleteEntry" class="dangerBtn" type="button">Eintrag löschen</button>
+    </section>
+  </main>
+</div>
+<script src="app.js?v=6.0"></script>
+</body>
+</html>
